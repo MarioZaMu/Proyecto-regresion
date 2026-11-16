@@ -64,3 +64,13 @@ Datos · Modelo y fórmulas · Ajuste · Geometría · Hessiano · Comparación 
 
 > El desarrollo analítico (derivadas parciales, sistema normal, solución y Hessiano) debe hacerse **a mano en papel**;
 > la app solo lo verifica y lo visualiza.
+
+## Presentación interactiva (HTML)
+
+```bash
+python presentacion/generar_html.py        # genera presentacion/Presentacion_interactiva.html
+```
+
+Abra el archivo en el navegador (←/→ para navegar, N = notas del orador, F = pantalla completa). Las gráficas son las mismas
+de la app y se pueden rotar/ampliar. Con `streamlit run app.py` en marcha (puerto 8501) la presentación detecta la app
+y permite abrir cada página o verla embebida en la diapositiva. También recalcula el ajuste en el navegador y lo compara con Python.
