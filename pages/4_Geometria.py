@@ -35,6 +35,13 @@ estilo.pie("Cada curva une pares $(a,b)$ con el **mismo error** $S$ (escala loga
            "y se separan más a medida que nos alejamos, como corresponde a una función cuadrática. La inclinación y el alargamiento de las elipses "
            "reflejan el término cruzado $S_{ab} = 2\\sum x_i \\neq 0$. Las curvas más internas rodean la región de mínimo error.")
 
+st.subheader("Animación: descenso por gradiente")
+pasos = estilo.persistente(st.slider, "Número de pasos", "geo_pasos", 30, min_value=5, max_value=80)
+estilo.mostrar(graficas.descenso_animado(ctx, frac, pasos), "gd")
+estilo.pie("Pulse **▶ Reproducir**. Partiendo de un punto cualquiera $(a,b)$, cada paso avanza en la dirección $-\\nabla S$ (la de mayor descenso) hasta llegar al fondo del valle. "
+           "El **zigzag** aparece porque el valle es estrecho (número de condición alto del Hessiano). Esto **no sustituye** el cálculo analítico: "
+           "las fórmulas normales resuelven $\\nabla S = 0$ de una sola vez; la animación solo muestra *por qué* el mínimo es único.")
+
 st.header("Trazas de la superficie")
 estilo.mostrar(graficas.trazas(ctx, "b", frac), "tr_b")
 estilo.pie("Cada curva es la intersección de la superficie con un plano $b = $ constante. **Todas son parábolas** en $a$ con la misma curvatura "

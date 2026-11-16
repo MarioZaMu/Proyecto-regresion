@@ -127,3 +127,12 @@ def test_resumen_markdown(xy):
               regresion.clasificar(x), "n", "T", "u", "ms", False)
     md = exportar.resumen_markdown(ctx, (None, None, None), {})
     assert "Hessiano" in md and "Opción B" in md
+
+
+def test_descenso_gradiente_converge(xy):
+    x, y = datos.escalar(xy[0], True), xy[1]
+    f = regresion.ajustar(x, y)
+    ruta = regresion.descenso_gradiente(x, y, (f.a + 0.5, f.b - 2.0), 200)
+    s = [float(regresion.error_cuadratico(a, b, x, y)) for a, b in ruta]
+    assert all(s[i + 1] <= s[i] + 1e-12 for i in range(len(s) - 1))
+    assert s[-1] - f.s_min < 1e-3 * (s[0] - f.s_min)

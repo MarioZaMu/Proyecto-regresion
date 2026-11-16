@@ -41,7 +41,10 @@ estilo.pie("La recta **azul** minimiza $S$: ninguna otra pareja $(a,b)$ obtiene 
 st.dataframe(pd.DataFrame([{"Recta": n, f"a ({ctx.ua})": estilo.fmt(a), "b (ms)": estilo.fmt(b), "S (ms²)": estilo.fmt(s),
                             "S / S_mín": f"{s / aj.s_min:.4g}"} for n, a, b, s in filas]), hide_index=True, width="stretch")
 mejores = all(f[3] >= aj.s_min for f in filas[1:])
-st.success("Comprobación: todas las rectas elegidas tienen $S \\ge S_{\\min}$.") if mejores else st.error("Una recta elegida tiene S menor que S_mín: revisar.")
+if mejores:
+    st.success("Comprobación: todas las rectas elegidas tienen $S \\ge S_{\\min}$.")
+else:
+    st.error("Una recta elegida tiene S menor que S_mín: revisar.")
 
 st.header("Análisis de la recta")
 t = ctx.calidad

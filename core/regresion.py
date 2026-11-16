@@ -183,3 +183,22 @@ def verificar_convexidad(x: Vector, y: Vector, ajuste: Ajuste, pares: int = 500,
     escala = np.maximum(np.abs(t * sp + (1 - t) * sq), 1e-300)
     cumplen = int(np.sum(holgura >= -1e-9 * escala))
     return {"pares": pares, "cumplen": cumplen, "holgura_min": float(np.min(holgura))}
+
+
+def descenso_gradiente(x: Vector, y: Vector, inicio: tuple[float, float], pasos: int = 40) -> np.ndarray:
+    """Descenso por gradiente con búsqueda de línea exacta (S es cuadrática).
+
+    En cada paso θ ← θ − α∇S con α = (∇Sᵀ∇S)/(∇Sᵀ H ∇S). Devuelve la ruta (pasos+1, 2).
+    Sirve para *visualizar* cómo se llega al mínimo; el ajuste real usa las fórmulas normales.
+    """
+    h = hessiano(x)
+    th = np.array(inicio, dtype=float)
+    ruta = [th.copy()]
+    for _ in range(pasos):
+        g = gradiente(th[0], th[1], x, y)
+        gg = float(g @ g)
+        if gg == 0.0:
+            break
+        th = th - (gg / float(g @ h @ g)) * g
+        ruta.append(th.copy())
+    return np.array(ruta)

@@ -292,3 +292,40 @@ def todas(ctx: Ctx) -> dict[str, go.Figure]:
         figs["11_modelo_cuadratico"] = cuadratico(ctx, t)
         figs["12_residuos_comparados"] = residuos_comparados(ctx, t)
     return figs
+
+
+def descenso_animado(ctx: Ctx, fraccion: float = 0.05, pasos: int = 30, tema: str | None = None) -> go.Figure:
+    """Curvas de nivel con animación del descenso por gradiente hacia (a*, b*)."""
+    from core.regresion import descenso_gradiente
+
+    p = _bruto(tema)
+    da, db = region(ctx, fraccion)
+    ruta = descenso_gradiente(ctx.x, ctx.y, (ctx.ajuste.a + 0.85 * da, ctx.ajuste.b - 0.6 * db), pasos)
+    av, bv, Z = _malla(ctx, fraccion, 140)
+    L = np.log10(Z)
+    fig = go.Figure(go.Contour(x=av, y=bv, z=L, colorscale=p["escala"], ncontours=16, showscale=False, name="S(a, b)",
+                               contours=dict(coloring="lines"), line=dict(width=1.4), hoverinfo="skip"))
+    fig.add_trace(go.Scatter(x=ruta[:1, 0], y=ruta[:1, 1], mode="lines+markers", name="Trayectoria",
+                             line=dict(color=p["secundario"], width=2.5), marker=dict(size=6, color=p["secundario"])))
+    fig.add_trace(go.Scatter(x=ruta[:1, 0], y=ruta[:1, 1], mode="markers", name="Posición actual",
+                             marker=dict(size=14, color=p["acento"], line=dict(width=2, color="white"))))
+    fig.add_trace(go.Scatter(x=[ctx.ajuste.a], y=[ctx.ajuste.b], mode="markers", name="Mínimo (a*, b*)",
+                             marker=dict(size=12, color=p["primario"], symbol="x", line=dict(width=3, color=p["primario"]))))
+    frames = []
+    for k in range(1, len(ruta) + 1):
+        s_k = float(error_cuadratico(ruta[k - 1, 0], ruta[k - 1, 1], ctx.x, ctx.y))
+        frames.append(go.Frame(name=str(k - 1), traces=[1, 2], data=[
+            go.Scatter(x=ruta[:k, 0], y=ruta[:k, 1]), go.Scatter(x=ruta[k - 1:k, 0], y=ruta[k - 1:k, 1])],
+            layout=go.Layout(title_text=f"Descenso por gradiente: paso {k - 1} · S = {estilo.fmt(s_k, 5)} ms²")))
+    fig.frames = frames
+    anim = dict(frame=dict(duration=320, redraw=True), transition=dict(duration=200, easing="cubic-in-out"), fromcurrent=True)
+    fig.update_layout(
+        updatemenus=[dict(type="buttons", direction="left", x=0.0, y=-0.2, xanchor="left", showactive=False, buttons=[
+            dict(label="▶ Reproducir", method="animate", args=[None, anim]),
+            dict(label="❚❚ Pausa", method="animate", args=[[None], dict(frame=dict(duration=0), mode="immediate")])])],
+        sliders=[dict(x=0.3, len=0.7, y=-0.1, currentvalue=dict(prefix="Paso: "), steps=[
+            dict(label=str(k), method="animate", args=[[str(k)], dict(mode="immediate", frame=dict(duration=0, redraw=True))])
+            for k in range(len(ruta))])])
+    fig = estilo.aplicar(fig, "Descenso por gradiente: paso 0", f"a ({ctx.ua})", "b (ms)", tema, altura=600)
+    fig.update_layout(margin=dict(l=60, r=24, t=64, b=110))
+    return fig

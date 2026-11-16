@@ -53,7 +53,10 @@ for nombre, (i, j) in {"S_aa": (0, 0), "S_ab": (0, 1), "S_bb": (1, 1)}.items():
                   "Error absoluto": estilo.fmt(abs(an - nu), 3), "Error relativo": estilo.fmt(abs(an - nu) / abs(an), 3)})
 st.dataframe(pd.DataFrame(filas), hide_index=True, width="stretch")
 err = float(np.max(np.abs(hn - cl.hessiano) / np.abs(cl.hessiano)))
-(st.success if err < 1e-4 else st.warning)(f"Error relativo máximo: {estilo.fmt(err, 3)} " + ("→ el Hessiano analítico queda verificado." if err < 1e-4 else "→ pruebe con otro paso."))
+if err < 1e-4:
+    st.success(f"Error relativo máximo: {estilo.fmt(err, 3)} → el Hessiano analítico queda verificado.")
+else:
+    st.warning(f"Error relativo máximo: {estilo.fmt(err, 3)} → pruebe con otro paso.")
 
 st.subheader("Gradiente en el punto crítico")
 g_an = regresion.gradiente(aj.a, aj.b, ctx.x, ctx.y)
