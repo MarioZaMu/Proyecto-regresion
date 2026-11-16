@@ -2,7 +2,13 @@
 
 CURSO = "Cálculo Multivariable"
 UNIVERSIDAD = "Universidad Cooperativa de Colombia (UCC)"
-ESTUDIANTE = "Mario Alberto Zambrano Muñoz"
+ESTUDIANTES = [
+    "Nicoll Valentina López Andrade",
+    "Juan David Jurado Paz",
+    "Brayan Steven Guerrero Acosta",
+    "Mario Alberto Zambrano Muñoz",
+]
+ESTUDIANTE = " · ".join(ESTUDIANTES)  # texto en una línea (encabezados, PDF, Markdown)
 PERIODO = "2026-B"
 TITULO_PROYECTO = "Regresión lineal y optimización con funciones de varias variables"
 TITULO_CORTO = "Regresión lineal · Cálculo Multivariable"

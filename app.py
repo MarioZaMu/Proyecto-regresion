@@ -22,7 +22,7 @@ PAGINAS = [
 
 with st.sidebar:
     st.markdown(f'<div class="titulo-lateral">{config.TITULO_PROYECTO}</div>'
-                f'<div class="sub-lateral">{config.CURSO} · {config.PERIODO}<br/>{config.UNIVERSIDAD}<br/>{config.ESTUDIANTE}</div>',
+                f'<div class="sub-lateral">{config.CURSO} · {config.PERIODO}<br/>{config.UNIVERSIDAD}<br/>{"<br/>".join(config.ESTUDIANTES)}</div>',
                 unsafe_allow_html=True)
     st.divider()
     for pagina in PAGINAS:

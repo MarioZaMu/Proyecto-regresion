@@ -1,6 +1,6 @@
 # Guion, contexto y preguntas — Proyecto de Cálculo Multivariable
 
-**Equipo:** Nicoll López · Juan Jurado · Brayan Guerrero · Mario Zambrano
+**Equipo:** Nicoll Valentina López Andrade · Juan David Jurado Paz · Brayan Steven Guerrero Acosta · Mario Alberto Zambrano Muñoz
 **Tema:** Regresión lineal y optimización con funciones de varias variables
 **Problema real:** tiempo de ejecución de una búsqueda lineal en función del tamaño de la entrada
 

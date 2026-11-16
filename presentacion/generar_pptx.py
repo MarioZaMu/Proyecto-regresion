@@ -41,6 +41,12 @@ NARANJA = RGBColor(0xFB, 0x92, 0x3C)
 FUENTE = "Segoe UI"
 FUENTE_MATE = "Cambria Math"
 
+NOMBRES_COMPLETOS = {
+    "N": "Nicoll Valentina López Andrade",
+    "J": "Juan David Jurado Paz",
+    "B": "Brayan Steven Guerrero Acosta",
+    "M": "Mario Alberto Zambrano Muñoz",
+}
 PERSONAS = {
     "N": "Nicoll López",
     "J": "Juan Jurado",
@@ -248,15 +254,15 @@ def construir(ctx: Ctx, fig: dict[str, Path]) -> Presentation:
     y0 = 5.45
     for k, (cl_, nm) in enumerate(COLOR_PERSONA.items()):
         pass
-    for k, (clave, nombre) in enumerate(PERSONAS.items()):
+    for k, (clave, nombre) in enumerate(NOMBRES_COMPLETOS.items()):
         col = COLOR_PERSONA[clave]
-        px = 0.8 + (k % 2) * 3.4
+        px = 0.8 + (k % 2) * 4.6
         py = y0 + (k // 2) * 0.5
         d = s.shapes.add_shape(MSO_SHAPE.OVAL, Inches(px), Inches(py + 0.1), Inches(0.16), Inches(0.16))
         d.line.fill.background()
         d.fill.solid()
         d.fill.fore_color.rgb = col
-        texto(s, px + 0.25, py, 3.1, 0.4, nombre, tam=16)
+        texto(s, px + 0.25, py, 4.3, 0.4, nombre, tam=16)
     texto(s, 0.8, 6.85, 9, 0.4, f"{config.UNIVERSIDAD}", tam=13, color=SUB)
 
     # 2 · Pregunta central ------------------------------------------------------
@@ -470,7 +476,7 @@ def construir(ctx: Ctx, fig: dict[str, Path]) -> Presentation:
         _transparencia(o, 22)
     texto(s, 0.9, 2.2, 8, 1.4, "¡Gracias!", tam=64, negrita=True)
     texto(s, 0.9, 3.6, 8, 0.8, "¿Preguntas?", tam=30, color=CIAN, negrita=True)
-    texto(s, 0.9, 5.0, 8, 1.2, ["Nicoll López · Juan Jurado", "Brayan Guerrero · Mario Zambrano"], tam=17, color=SUB, interlineado=1.3)
+    texto(s, 0.9, 5.0, 9, 1.2, ["Nicoll Valentina López Andrade · Juan David Jurado Paz", "Brayan Steven Guerrero Acosta · Mario Alberto Zambrano Muñoz"], tam=17, color=SUB, interlineado=1.3)
     return prs
 
 
