@@ -1,0 +1,23 @@
+{
+  "origen": "estudiante",
+  "fecha_hora": "2026-11-14T18:17:21",
+  "python": "3.14.5",
+  "sistema_operativo": "Windows 11 (10.0.26200)",
+  "procesador": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+  "ram_gb": 15.31,
+  "experimento": {
+    "descripcion": "Tiempo de ejecución de una búsqueda lineal propia en función del tamaño de la entrada.",
+    "algoritmo": "for sobre list(range(n)) buscando un elemento ausente (-1): peor caso, n comparaciones.",
+    "x": "n = tamaño de la entrada (elementos)",
+    "y": "tiempo de ejecución (ms)",
+    "tamanos": [
+      100000,
+      1500000,
+      100000
+    ],
+    "calentamiento": 2,
+    "repeticiones": 5,
+    "estadistico": "mediana de las repeticiones",
+    "cronometro": "time.perf_counter_ns()"
+  }
+}
